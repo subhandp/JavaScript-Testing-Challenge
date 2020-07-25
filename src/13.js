@@ -1,54 +1,54 @@
-function stats(a) {
-    // // return dataset.reduce((a, b) => a + b, 0) / dataset.length
-    // let counts = {};
-    // dataset.map((v) => {
-    //     if (counts[v] === undefined) {
-    //         counts[v] = 0
-    //     }
-    //     counts[v] += 1
-    // })
-
-    // console.log(counts);
-
-
-    return Object.values(
-        a.reduce((count, e) => {
-            if (!(e in count)) {
-                count[e] = [0, e];
-            }
-
-            count[e][0]++;
-            return count;
-        }, {})
-    ).reduce((a, v) => v[0] < a[0] ? a : v, [0, null])[1];
-
-
-
-
-}
-
-
-function median(numbers) {
-    const sorted = numbers.sort((a, b) => a - b);
-    const middle = Math.floor(sorted.length / 2);
-
-    if (sorted.length % 2 === 0) {
-        return (sorted[middle - 1] + sorted[middle]) / 2;
+class Stats {
+    constructor(dataset) {
+        this.datasetLength = dataset.length;
+        this.maxVal = Math.max(...dataset);
+        this.minVal = Math.min(...dataset);
+        this.datasetSum = dataset.reduce((a, b) => a + b, 0);
+        this.statsVal = {};
+        this.statsVal['mean'] = this.datasetSum / this.datasetLength;
+        this.statsVal['median'] = this.median(dataset);
+        this.statsVal['range'] = this.maxVal - this.minVal;
+        this.statsVal['mode'] = this.mode(dataset);
+        this.statsVal['largest'] = this.maxVal;
+        this.statsVal['smallest'] = this.minVal;
+        this.statsVal['sum'] = this.datasetSum;
+        this.statsVal['count'] = this.datasetLength;
+        return this.statsVal;
     }
+    me() {
+        return this.statsVal;
+    }
+    median(dataset) {
+        const sorted = dataset.sort((a, b) => a - b);
+        const middle = Math.floor(sorted.length / 2);
 
-    return sorted[middle];
+        if (sorted.length % 2 === 0) {
+            return (sorted[middle - 1] + sorted[middle]) / 2;
+        }
+
+        return sorted[middle];
+    }
+    mode(dataset) {
+        let object = {};
+        dataset.map((v) => {
+            if (object[v] === undefined) {
+                object[v] = 0
+            }
+            object[v] += 1
+        })
+
+        let modeVal = Object.keys(object).filter(x => {
+            return object[x] == Math.max.apply(null,
+                Object.values(object));
+        });
+
+        return modeVal.join(', ') + `, each appeared ${object[modeVal[0]]} times`
+
+    }
 }
 
-// {
-//     "mean": 22.142857142857,
-//     "median": 23,
-//     "range": 36,
-//     "mode": "38, 23, each appeared 2 times",
-//     "largest": 38,
-//     "smallest": 2,
-//     "sum": 155,
-//     "count": 7
-// }
+const dataset = [10, 2, 38, 23, 38, 23, 21];
+const stats = new Stats(dataset);
+console.log(stats);
 
-// console.log(median([10, 2, 38, 23, 38, 23, 21]))
-console.log(stats([10, 2, 38, 23, 38, 23, 21]))
+module.exports = Stats;
