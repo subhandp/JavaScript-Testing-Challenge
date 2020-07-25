@@ -44,8 +44,4 @@ class Stats {
     }
 }
 
-const dataset = [10, 2, 38, 23, 38, 23, 21];
-const stats = new Stats(dataset);
-console.log(stats);
-
 module.exports = Stats;
