@@ -1,5 +1,3 @@
-function arrayMirroring(numberList) {
-    return [...numberList, ...numberList.reverse()]
-}
+const arrayMirroring = (numberList) => { return [...numberList, ...numberList.reverse()] }
 
 module.exports = arrayMirroring;

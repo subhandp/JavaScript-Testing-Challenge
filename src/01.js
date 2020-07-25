@@ -1,4 +1,4 @@
-function charLength(text) {
+const charLength = (text) => {
     return typeof text === "string" ? text.length : undefined;
 }
 
