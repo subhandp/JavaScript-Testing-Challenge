@@ -15,9 +15,6 @@ class Stats {
         this.statsVal['count'] = this.datasetLength;
         return this.statsVal;
     }
-    me() {
-        return this.statsVal;
-    }
     median(dataset) {
         const sorted = dataset.sort((a, b) => a - b);
         const middle = Math.floor(sorted.length / 2);
